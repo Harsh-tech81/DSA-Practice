@@ -1,0 +1,9 @@
+-DS->  Visited set,priority_queue<pair<int,int>>pq;(MinHeap) , unordered_map<pair> 
+
+-> insert the pair <0,src> in the pq.
+-> one by one remove the root element of the pq
+-> if the root element is already Visited,then we'll just continue
+-> Otherwise we mark the root visited 
+-> we store the wt of the pair in the ans
+-> update the mapping
+-> go to every neighbour of the curr element, and only add those which are non-visited and have a better wt proposition.

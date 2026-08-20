@@ -13,7 +13,7 @@ int helper(int i, vector<int> &rods, int diff) { // diff is l1-l2
     }
     return INT_MIN;
   }
-  if (t[i][diff + 5000] != -1)
+  if (t[i][diff + 5000] != -1) // we have added the offset value so that it becomes postive index range 
     return t[i][diff + 5000]; // we have added the offset value of 5000 since
                               // the diff range goes from -5000 to 5000 after
                               // adding 5000 it goes from 0 to 10000

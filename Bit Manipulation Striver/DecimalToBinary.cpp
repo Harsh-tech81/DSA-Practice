@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+// bitset<8>(40)  built-in function to make the binary integer in 8 bit
 int decimalToBinary(int n) {
   int ans = 0;
   int place = 1;

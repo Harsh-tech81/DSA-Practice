@@ -19,26 +19,39 @@ public:
             return a[0] < b[0];
         return a.length() < b.length();
     }
-    int dp[1001][1001];
-    int solve(int i, vector<string>& words, int prev) {
-        if (i >= words.size())
-            return 0;
-        if (prev != -1 && dp[i][prev] != -1)
-            return dp[i][prev];
-        int skip = solve(i + 1, words, prev);
-        int take = 0;
-        if (prev == -1 || (words[i].length() == words[prev].length() + 1 &&
-                           checkSubsequence(words[prev], words[i]))) {
-            take = 1 + solve(i + 1, words, i);
-        }
-        if (prev != -1)
-            dp[i][prev] = max(skip, take);
-        return max(skip, take);
-    }
+    // int dp[1001][1001];
+    // int solve(int i, vector<string>& words, int prev) {
+    //     if (i >= words.size())
+    //         return 0;
+    //     if (prev != -1 && dp[i][prev] != -1)
+    //         return dp[i][prev];
+    //     int skip = solve(i + 1, words, prev);
+    //     int take = 0;
+    //     if (prev == -1 || (words[i].length() == words[prev].length() + 1 &&
+    //                        checkSubsequence(words[prev], words[i]))) {
+    //         take = 1 + solve(i + 1, words, i);
+    //     }
+    //     if (prev != -1)
+    //         dp[i][prev] = max(skip, take);
+    //     return max(skip, take);
+    // }
     int longestStrChain(vector<string>& words) {
         sort(words.begin(), words.end(), cmp);
-        memset(dp, -1, sizeof(dp));
-        return solve(0, words, -1);
-        return 0;
+        int n = words.size();
+        // memset(dp, -1, sizeof(dp));
+        // return solve(0, words, -1);
+        // Bottom-Up approach
+        vector<int> t(n, 1);
+        int mx = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if ((words[i].length() == words[j].length() + 1) &&
+                    checkSubsequence(words[j], words[i])) {
+                    t[i] = max(1 + t[j], t[i]);
+                    mx = max(mx, t[i]);
+                }
+            }
+        }
+        return mx;
     }
 };

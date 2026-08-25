@@ -19,7 +19,8 @@ public:
     //         take =
     //             nums[i] +
     //             solve(i + 1, i,
-    //                   nums); // if taken then add the nums[i] to the total sum
+    //                   nums); // if taken then add the nums[i] to the total
+    //                   sum
     //     }
     //     non_taken = solve(i + 1, prev, nums);
     //     return mp[key] =
@@ -34,9 +35,9 @@ public:
         //     return mx;
         // // return solve(0, -1, nums);
         // // Now write its Bottom-Up solution which is also give TLE
-        //    int n = nums.size();
-        // vector<long long> t(n);  // t[i] denotes the LIS ending at the ith index
-        // for(int i=0;i<n;i++){
+        int n = nums.size();
+        // vector<long long> t(n);  // t[i] denotes the LIS ending at the ith
+        // index for(int i=0;i<n;i++){
         //     t[i]=(long long)nums[i];
         // }
         // for (int i = 1; i < n; i++) {
@@ -49,8 +50,24 @@ public:
         // }
         // return mx;
 
-
-
-
+        // by using ordered_map
+        map<int, long long> mp; // key is nums[i]-i and value is the sum (use ordered map )
+        long long res = INT_MIN;
+        for (int i = 0; i < n; i++) {
+            int target = nums[i] - i;
+            auto it = mp.upper_bound(target); // finding the ele which is just greater than the target 
+            long long sum = nums[i];
+            if (it != mp.begin()) { // then decrease the it bcz we want less than or equal to target but manage edge case if it is already present at the index 0 
+                --it;
+                sum += it->second; 
+            }
+            mp[target] = max(mp[target], sum);
+            it = mp.upper_bound(target); // for deleting we find the ele which is greater than the target but sum is less than or equal to then only erase that ele from mp
+            while (it != mp.end() && it->second <= sum){
+                mp.erase(it++);
+            }
+            res = max(res, sum);
+        }
+        return res;
     }
 };

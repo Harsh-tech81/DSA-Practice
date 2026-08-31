@@ -15,6 +15,6 @@ int loga(int x, int n)
 }
 int main()
 {
-    cout << loga(5,10) << endl;
+    cout << loga(2,10) << endl;
     return 0;
 }
